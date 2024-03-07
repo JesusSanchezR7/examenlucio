@@ -1,0 +1,16 @@
+name: CI-Examne-php
+
+on:
+  push:
+    branches: [main]
+  pull_requests:
+    branches: [main]
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    #Indica en qué tipo de máquina se ejecutará el trabajo.
+    env: 1.16
+    #Define variables de entorno para el trabajo.
+
+
