@@ -17,12 +17,11 @@ jobs:
     #Indica en qué tipo de máquina se ejecutará el trabajo.
    
   steps:  
-  #para configurar el entorno de Go en la máquina de ejecución
-  - name: Setup PHP with PECL extension
+    - name: Setup PHP with PECL extension
     uses: shivammathur/setup-php@v2
     with:
        php-version: '8.3'
-       extensions: imagick, swoole
+      # extensions: imagick, swoole
     #linter 
     - name: Install Dependencies
     - run: composer install
