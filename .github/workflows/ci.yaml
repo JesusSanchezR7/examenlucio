@@ -5,7 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  branch_protection_rule:
+  branch_protection_rule:     #se cambian las reglas de protección de rama en el repositorio
     types: [created, deleted]
   check_run:
     types: [rerequested, completed]
