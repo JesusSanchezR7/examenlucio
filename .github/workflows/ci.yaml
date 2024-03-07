@@ -11,6 +11,34 @@ jobs:
     runs-on: ubuntu-latest
     #Indica en qué tipo de máquina se ejecutará el trabajo.
     env: 1.16
-    #Define variables de entorno para el trabajo.
 
+  steps:  
+  #Contiene una lista de pasos que se ejecutarán como parte del trabajo. 
+ - uses: actions/checkout@v3 
+  #para configurar el entorno de Go en la máquina de ejecución
+  - name: Setup PHP with PECL extension
+    uses: shivammathur/setup-php@v2
+    with:
+       php-version: '8.3'
+       extensions: imagick, swoole
 
+    - name: Install Dependencies
+    - run: composser intall
+
+    - name: Run unit and integrate tests
+    - run: composser test 
+
+    - name: Run build
+    - run: composser build 
+
+    - name: Run lint
+    - run: compuser lint
+
+    - name: CI Successful Ok
+      if: success()
+      uses: rtCamp/action-slack-notify@v2
+      with:
+        status: 'passed'
+        text: 'composser CI succesfully.'
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
