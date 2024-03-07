@@ -5,10 +5,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  
   branch_protection_rule:
     types: [created, deleted]
-
+  check_run:
+    types: [rerequested, completed]
+  
 jobs: 
   build:
     runs-on: ubuntu-latest
@@ -29,14 +30,14 @@ jobs:
     - run: composer install
 
     - name: Run unit and integrate tests
-    - run: composer test 
+    - run: composer test tests
 
     - name: Run build
     - run: composser build 
 
     - name: Run lint
-    - run: compuser lint
-
+    - run: compuser lint src
+ 
     - name: CI Successful Ok
       if: success()
       uses: rtCamp/action-slack-notify@v2
