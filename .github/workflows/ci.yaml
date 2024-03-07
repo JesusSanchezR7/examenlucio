@@ -1,11 +1,12 @@
 name: CI-Examne-php
 
 on:
+#Define los eventos
   push:
     branches: [main]
   pull_request:
     branches: [main]
-  branch_protection_rule:     #se cambian las reglas de protección de rama en el repositorio
+  branch_protection_rule:          #se cambian las reglas de protección de rama en el repositorio
     types: [created, deleted]
   check_run:
     types: [rerequested, completed]
@@ -14,18 +15,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     #Indica en qué tipo de máquina se ejecutará el trabajo.
-    env: 2.2.9
-
+   
   steps:  
-  #Contiene una lista de pasos que se ejecutarán como parte del trabajo. 
- - uses: actions/checkout@v3 
+  #Contiene una lista de pasos que se ejecutarán como parte del trabajo.  
+  - uses: actions/checkout@v3 
   #para configurar el entorno de Go en la máquina de ejecución
   - name: Setup PHP with PECL extension
     uses: shivammathur/setup-php@v2
     with:
        php-version: '8.3'
        extensions: imagick, swoole
-
+    #linter 
     - name: Install Dependencies
     - run: composer install
 
@@ -37,12 +37,3 @@ jobs:
 
     - name: Run lint
     - run: compuser lint src
- 
-    - name: CI Successful Ok
-      if: success()
-      uses: rtCamp/action-slack-notify@v2
-      with:
-        status: 'passed'
-        text: 'composer CI succesfully.'
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
